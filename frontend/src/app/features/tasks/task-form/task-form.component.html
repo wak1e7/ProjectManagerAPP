@@ -1,0 +1,70 @@
+<!-- src/app/features/tasks/task-form/task-form.component.html -->
+<div class="max-w-lg mx-auto mt-6 p-6 bg-gray-800 text-gray-200 rounded shadow">
+  <h3 class="text-xl font-bold mb-4">
+    {{ taskId ? 'Detalles de la Tarea' : 'Nueva Tarea' }}
+  </h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label class="block mb-1">Título</label>
+      <input formControlName="title" type="text"
+             class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200"
+             placeholder="Título de la tarea" />
+      <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched"
+           class="text-red-400 text-sm">
+        El título es requerido
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1">Descripción</label>
+      <textarea formControlName="description"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200"
+                rows="4"
+                placeholder="Descripción (opcional)"></textarea>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1">Estado</label>
+      <select formControlName="status"
+              class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200">
+        <option *ngFor="let s of statuses" [value]="s">
+          {{ label(s) }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1">Fecha límite</label>
+      <input formControlName="dueDate" type="date"
+             class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200" />
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1">Asignar a</label>
+      <select formControlName="assigneeIds" multiple
+              class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200 h-32">
+        <option *ngFor="let m of members" [value]="m.userId">
+          {{ m.email }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="error" class="mb-4 text-red-400">{{ error }}</div>
+
+    <div class="flex space-x-2">
+      <button type="submit"
+              class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+        Guardar
+      </button>
+      <button *ngIf="taskId" type="button" (click)="onDelete()"
+              class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+        Eliminar
+      </button>
+      <button type="button" (click)="cancel()"
+              class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

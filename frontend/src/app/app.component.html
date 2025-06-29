@@ -1,0 +1,36 @@
+<div class="min-h-screen flex flex-col bg-gray-900 text-gray-200">
+  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-lg font-bold">Project Manager</h1>
+    <ng-container *ngIf="auth.isAuthenticated()">
+      <div class="relative">
+        <button
+          (click)="toggleMenu($event)"
+          class="flex items-center space-x-2 px-2 py-1 hover:bg-gray-700 rounded"
+        >
+          <fa-icon [icon]="'user'" class="w-5 h-5"></fa-icon>
+          <span>{{ userEmail$ | async }}</span>
+          <fa-icon [icon]="'chevron-down'" class="w-4 h-4"></fa-icon>
+        </button>
+
+        <div
+          *ngIf="menuOpen"
+          class="absolute right-0 mt-2 bg-white text-gray-800 rounded shadow-lg w-32 z-10"
+        >
+          <button
+            (click)="logout()"
+            class="flex items-center space-x-2 w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
+            <fa-icon
+              [icon]="'sign-out-alt'"
+              class="w-4 h-4 text-gray-600"
+            ></fa-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </header>
+  <main class="flex-1 overflow-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,53 @@
+<div class="p-6 bg-gray-900 text-gray-200">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Tareas</h2>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+    <div
+      *ngFor="let state of states"
+      class="flex flex-col bg-gray-800 rounded-lg"
+    >
+      <div
+        class="flex justify-between items-center px-4 py-2 border-b border-gray-700"
+      >
+        <h3 class="font-semibold flex items-center">
+          <fa-icon
+            [icon]="'grip-vertical'"
+            class="mr-2 text-gray-500"
+          ></fa-icon>
+          {{ state.label }}
+        </h3>
+        <button
+          (click)="newTask(state.key)"
+          class="text-green-400 hover:text-green-300 focus:outline-none"
+        >
+          <fa-icon [icon]="'plus'"></fa-icon>
+        </button>
+      </div>
+
+      <div
+        cdkDropList
+        id="{{ state.key }}"
+        [cdkDropListData]="tasksFor(state.key)"
+        [cdkDropListConnectedTo]="stateKeys"
+        class="flex-1 px-4 py-2 space-y-2 overflow-y-auto"
+        (cdkDropListDropped)="drop($event, state.key)"
+      >
+        <div
+          *ngFor="let t of tasksFor(state.key)"
+          cdkDrag
+          class="p-4 bg-gray-700 rounded cursor-move hover:bg-gray-600 flex items-center"
+        >
+          <fa-icon
+            [icon]="'circle-check'"
+            class="mr-2 text-green-500"
+          ></fa-icon>
+          <a [routerLink]="[t.id, 'edit']" class="block font-medium">
+            {{ t.title }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

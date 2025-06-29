@@ -1,0 +1,28 @@
+<div class="max-w-md mx-auto mt-6 p-6 bg-gray-800 text-gray-200 rounded shadow">
+  <h2 class="text-xl font-bold mb-4">Subir Documento</h2>
+
+  <div class="mb-4">
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      class="w-full bg-gray-700 text-gray-200 p-2 border border-gray-600 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <div *ngIf="error" class="mb-4 text-red-400">{{ error }}</div>
+
+  <div class="flex space-x-2">
+    <button
+      (click)="upload()"
+      class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+    >
+      Subir
+    </button>
+    <button
+      (click)="cancel()"
+      class="flex-1 bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+    >
+      Cancelar
+    </button>
+  </div>
+</div>

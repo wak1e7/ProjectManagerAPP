@@ -1,0 +1,49 @@
+<div class="p-6 bg-gray-900 text-gray-200">
+  <button
+    (click)="goBack()"
+    class="mb-4 inline-flex items-center text-blue-400 hover:text-blue-300"
+  >
+    <fa-icon icon="arrow-left" class="mr-2"></fa-icon>
+    Volver a la lista
+  </button>
+
+  <div *ngIf="error" class="text-red-400 mb-4">{{ error }}</div>
+
+  <div *ngIf="project" class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
+    <div class="h-32 bg-blue-600"></div>
+
+    <div class="p-6">
+      <h1 class="text-2xl font-bold mb-2">{{ project.title }}</h1>
+      <p class="mb-4 text-gray-300">{{ project.description }}</p>
+
+      <nav class="flex space-x-4 mb-6 border-b border-gray-700 pb-2">
+        <a
+          routerLink="./tasks"
+          routerLinkActive="font-semibold text-white"
+          class="inline-flex items-center text-gray-400 hover:text-gray-200"
+        >
+          <fa-icon icon="tasks" class="mr-1"></fa-icon>
+          Seguimiento de tareas
+        </a>
+        <a
+          routerLink="./documents"
+          routerLinkActive="font-semibold text-white"
+          class="inline-flex items-center text-gray-400 hover:text-gray-200"
+        >
+          <fa-icon icon="file-alt" class="mr-1"></fa-icon>
+          Centro de Documentos
+        </a>
+        <a
+          routerLink="./team"
+          routerLinkActive="font-semibold text-white"
+          class="inline-flex items-center text-gray-400 hover:text-gray-200"
+        >
+          <fa-icon icon="users" class="mr-1"></fa-icon>
+          Gestión de Roles
+        </a>
+      </nav>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

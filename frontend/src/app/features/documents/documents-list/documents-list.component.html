@@ -1,0 +1,90 @@
+<div class="p-6 bg-gray-900 text-gray-200">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Centro de Documentos</h2>
+    <button
+      routerLink="upload"
+      class="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded"
+    >
+      <fa-icon icon="plus" class="mr-2"></fa-icon>
+      <span class="ml-1">Nuevo Documento</span>
+    </button>
+  </div>
+
+  <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+    <thead class="bg-gray-700 text-gray-300">
+      <tr>
+        <th class="px-4 py-2 text-left">Nombre</th>
+        <th class="px-4 py-2 text-left">Categoría</th>
+        <th class="px-4 py-2 text-left">Archivo</th>
+        <th class="px-4 py-2 text-left">Fecha</th>
+        <th class="px-4 py-2 text-left">Versión</th>
+        <th class="px-4 py-2 text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-700">
+      <tr *ngFor="let d of documents" class="hover:bg-gray-700">
+        <td class="px-4 py-2">{{ d.fileName }}</td>
+        <td class="px-4 py-2">{{ d.fileType }}</td>
+        <td class="px-4 py-2">
+          <button
+            (click)="download(d)"
+            class="inline-flex items-center space-x-1 text-blue-400 hover:text-blue-300 focus:outline-none"
+          >
+            <fa-icon [icon]="'download'"></fa-icon>
+            <span class="hidden sm:inline">Descargar</span>
+          </button>
+        </td>
+        <td class="px-4 py-2">
+          <ng-container
+            *ngIf="
+              editingId === d.id && editingField === 'updatedAt';
+              else showDate
+            "
+          >
+            <input
+              type="date"
+              [(ngModel)]="editValue"
+              (blur)="save(d)"
+              (keydown.enter)="save(d)"
+              class="w-full bg-gray-700 text-gray-200 p-1 rounded"
+            />
+          </ng-container>
+          <ng-template #showDate>
+            <div (click)="startEdit(d, 'updatedAt')" class="cursor-pointer">
+              {{ fmt(d.updatedAt) }}
+            </div>
+          </ng-template>
+        </td>
+        <td class="px-4 py-2">
+          <ng-container
+            *ngIf="
+              editingId === d.id && editingField === 'version';
+              else showVer
+            "
+          >
+            <input
+              type="text"
+              [(ngModel)]="editValue"
+              (blur)="save(d)"
+              (keydown.enter)="save(d)"
+              class="w-full bg-gray-700 text-gray-200 p-1 rounded"
+            />
+          </ng-container>
+          <ng-template #showVer>
+            <div (click)="startEdit(d, 'version')" class="cursor-pointer">
+              {{ d.version }}
+            </div>
+          </ng-template>
+        </td>
+        <td class="px-4 py-2 text-center">
+          <button
+            (click)="delete(d)"
+            class="inline-flex items-center space-x-1 text-red-400 hover:text-red-300 focus:outline-none"
+          >
+            <fa-icon [icon]="'trash'"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

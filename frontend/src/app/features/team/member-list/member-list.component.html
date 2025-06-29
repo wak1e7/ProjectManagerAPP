@@ -1,0 +1,72 @@
+<div class="p-6 bg-gray-900 text-gray-200 overflow-auto">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Gestion de Roles</h2>
+    <button
+      routerLink="manage"
+      class="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded"
+    >
+      <fa-icon icon="plus" class="mr-2"></fa-icon>
+      <span class="ml-1">Añadir Miembro</span>
+    </button>
+  </div>
+  <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+    <thead class="bg-gray-700 text-gray-300">
+      <tr>
+        <th class="px-4 py-2 text-left">Miembro</th>
+        <th class="px-4 py-2 text-left">Rol</th>
+        <th class="px-4 py-2 text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-700">
+      <tr *ngFor="let m of members" class="hover:bg-gray-700">
+        <td class="px-4 py-2">{{ m.email }}</td>
+        <td class="px-4 py-2">
+          <ng-container *ngIf="editingId === m.userId; else showRole">
+            <div class="flex items-center space-x-2">
+              <select
+                [(ngModel)]="editRole"
+                class="bg-gray-700 text-gray-200 p-1 rounded flex-grow"
+              >
+                <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+              </select>
+              <button
+                (click)="saveEdit(m)"
+                class="text-green-400 hover:text-green-300 focus:outline-none"
+              >
+                <fa-icon icon="edit"></fa-icon>
+              </button>
+              <button
+                (click)="cancelEdit()"
+                class="text-red-400 hover:text-red-300 focus:outline-none"
+              >
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #showRole>
+            <span
+              class="inline-block bg-indigo-600 text-white text-xs px-2 py-1 rounded"
+            >
+              {{ m.role }}
+            </span>
+          </ng-template>
+        </td>
+        <td class="px-4 py-2 text-center space-x-4">
+          <button
+            (click)="startEdit(m)"
+            class="text-yellow-400 hover:text-yellow-300 focus:outline-none"
+          >
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+          <button
+            (click)="remove(m)"
+            class="text-red-400 hover:text-red-300 focus:outline-none"
+          >
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="error" class="mt-4 text-red-400">{{ error }}</div>
+</div>

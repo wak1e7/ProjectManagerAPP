@@ -1,0 +1,39 @@
+<div class="max-w-lg mx-auto mt-8 p-6 bg-gray-800 text-gray-200 rounded shadow">
+  <h2 class="text-xl font-bold mb-4">
+    {{ id ? 'Editar Proyecto' : 'Nuevo Proyecto' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label class="block mb-1 text-gray-300">Título</label>
+      <input formControlName="title"
+             class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Nombre del proyecto" />
+      <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched"
+           class="text-red-400 text-sm mt-1">
+        El título es requerido
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1 text-gray-300">Descripción</label>
+      <textarea formControlName="description"
+                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows="4"
+                placeholder="Descripción opcional"></textarea>
+    </div>
+
+    <div *ngIf="error" class="mb-4 text-red-400">{{ error }}</div>
+
+    <div class="flex space-x-2">
+      <button type="submit"
+              class="flex-grow bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+        Guardar
+      </button>
+      <button type="button" (click)="router.navigate(['/projects'])"
+              class="flex-grow bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
